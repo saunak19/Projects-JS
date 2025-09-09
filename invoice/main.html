@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>GST Invoice</title>
+    <link rel="icon" href="./invoice.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+</head>
+
+<body class="bg-[#F5F5F5]">
+    <header class="flex shadow-sm">
+        <div class="container mx-auto py-4 flex items-center bg-[#FFFFFF]">
+            <div class="p-3 bg-blue-600 rounded-lg mx-4">
+                <i class="fa-solid fa-receipt text-white text-2xl"></i>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold">GST Invoice</h2>
+                <p class="text-sm text-gray-600">Create professional invoices quickly</p>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div>
+            <div class="flex justify-center items-center  ">
+                <div class="shadow-md mt-5 w-[60%] rounded-[10px] bg-[#FFFFFF]">
+                    <div class=" bg-blue-600 text-white rounded-t-[10px]" id="header">
+                        <div class="flex items-center py-2.5 px-4  ">
+                            <div class="mx-2">
+                                <i class="fas fa-plus-circle text-xl header-icon" id="header-icon"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl capitalize font-mono" id="invoiceTitle">Create New Invoice</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-4  py-6">
+                        <form action="" id="invoiceForm">
+                            <div>
+                                <div class="border-b border-b-gray-400 mb-3">
+                                    <h3 class="text-lg text-gray-700 font-semibold pb-2">Invoice Details</h3>
+                                </div>
+                                <div class="grid grid-cols-3 gap-6">
+                                    <div>
+                                        <label class="block text-sm text-gray-700 font-semibold mb-1"><span
+                                                class="text-red-500">*</span>
+                                            Name</label>
+                                        <input type="text" class="w-full p-2 rounded-lg border border-gray-300"
+                                            placeholder="Enter Name" id="userName" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-700 font-semibold mb-1"><span
+                                                class="text-red-500">*</span> Invoice
+                                            Number</label>
+
+                                        <input type="number" class="w-full p-2 rounded-lg border  border-gray-300"
+                                            placeholder="Enter Invoice Number" id="invoiceNumber">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm text-gray-700 font-semibold mb-1"><span
+                                                class="text-red-500">*</span> Invoice
+                                            Date</label>
+                                        <input type="date" class="w-full p-2 rounded-lg border border-gray-300"
+                                            placeholder="Invoice Date" id="invoiceDate">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="border-b border-b-gray-400 my-3">
+                                    <h3 class="text-lg text-gray-700 font-semibold pb-2">Items</h3>
+                                </div>
+                                <div class="overflow-auto">
+                                    <table class="w-full" id="gstTable">
+                                        <thead class="bg-gray-500/10">
+                                            <tr class="">
+                                                <th class="p-3 text-left text-gray-800 ">Item Name</th>
+                                                <th class="p-3 text-left text-gray-800 ">Quantity</th>
+                                                <th class="p-3 text-left text-gray-800 ">Price</th>
+                                                <th class="p-3 text-left text-gray-800 ">Tax</th>
+                                                <th class="p-3 text-left text-gray-800 ">Amount</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody class="border-b border-b-gray-400 ">
+                                            <tr class="dataRow">
+                                                <td class="p-2">
+                                                    <input type="text" placeholder="Item name"
+                                                        class="rounded-lg border border-gray-300 p-2 itemName">
+                                                </td>
+                                                <td class="p-2">
+                                                    <input type="number" placeholder="Qty" id="qty_1"
+                                                        class="rounded-lg border border-gray-300 p-2 qty" value="">
+                                                </td>
+                                                <td class="p-2">
+                                                    <input type="number" placeholder="Price" id="price_1"
+                                                        class="rounded-lg border border-gray-300 p-2 price" value="">
+                                                </td>
+                                                <td class="p-2">
+                                                    <!-- <select name="GST" id="gst" class="gstPercent" title="gst"
+                                                        id="gst_1">
+                                                        <option value="0">GST 0%</option>
+                                                        <option value="5">GST 5%</option>
+                                                        <option value="12">GST 12%</option>
+                                                        <option value="18">GST 18%</option>
+                                                        <option value="28">GST 28%</option>
+                                                    </select> -->
+                                                    <select name="GST" title="gst"
+                                                        class=" gstPercent gst-select w-full p-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm cursor-pointer appearance-none ">
+                                                        <option value="0">GST 0%</option>
+                                                        <option value="5">GST 5%</option>
+                                                        <option value="12">GST 12%</option>
+                                                        <option value="18">GST 18%</option>
+                                                        <option value="28">GST 28%</option>
+                                                    </select>
+                                                </td>
+                                                <td class="p-2">
+                                                    <p class="amount" id="amount_1" value="">₹0.00</p>
+                                                </td>
+                                                <td></i>
+                                                    <button type="button" onclick="deleteRow(this)" title="button"><i
+                                                            class="fa-solid fa-trash text-red-500 cursor-pointer"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot class="border-b border-b-gray-400 ">
+                                            <tr>
+                                                <td colspan="4" class="text-right px-2 py-1 font-mono">Sub-Total:</td>
+                                                <td class="subtotal px-2 font-mono">₹0.00</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" class="text-right px-2 py-1 font-mono">GST Total:</td>
+                                                <td class="gstTotal px-2 font-mono">₹0.00</td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan="4" class="text-right px-2 py-1 font-mono">Total:</td>
+                                                <td class="grandTotal px-2 font-mono">₹0.00
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+
+                                    </table>
+
+                                </div>
+                                <div>
+                                    <div class="flex justify-between">
+                                        <button type="button" id="addItem" title="button"
+                                            class="mt-4 flex items-center text-blue-600 hover:text-blue-800 cursor-pointer  p-2 rounded-lg shadow-md font-[monospace] bg-stone-50">
+                                            <i class="fas fa-plus-circle mr-2"></i>Add
+                                            Another Item
+                                        </button>
+                                        <button type="submit" id="submit" title="submit"
+                                            class=" antialiased border mt-4 flex items-center text-blue-600 hover:text-blue-800  p-2 px-5 rounded-xl border-b-3 hover: active:border-b-1 shadow-md font-[monospace] cursor-pointer">
+                                            Submit
+                                        </button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <script src="./script.js"></script>
+
+</body>
+
+</html>
